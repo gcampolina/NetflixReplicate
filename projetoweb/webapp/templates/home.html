@@ -1,0 +1,317 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <style>
+        .banner {
+            background-image: url('https://r2.easyimg.io/7x0q5vf07/la_casa_de_papel-19.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            color: white;
+            object-fit: contain;
+            height: 600px;
+        }
+
+        .banner_contents {
+            margin-left: 10px;
+            padding: 200px;
+            height: 190px;
+        }
+
+        .banner_title {
+            text-shadow: 0px 4px 3px black;
+            font-size: 3rem;
+            font-weight: 800;
+            padding-bottom: 0.3rem;
+        }
+
+        .banner_description {
+            text-shadow: 0px 4px 3px black;
+            width: 45rem;
+            line-height: 1.3;
+            padding-top: 1rem;
+            font-size: 0.8rem;
+            max-width: 360px;
+            height: 180px;
+        }
+
+        .banner_button {
+            text-transform: uppercase;
+            cursor: pointer;
+            color: #fff;
+            outline: none;
+            font-weight: 900;
+            border-radius: 10px;
+            padding-left: 2rem;
+            padding-right: 2rem;
+            margin-right: 1rem;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            background-color: rgba(163, 25, 25, 0.5);
+        }
+
+        .banner_button:hover {
+            color: #000;
+            background-color: #e6e6e6;
+            transition: all 0.2s;
+        }
+
+        .banner_fadeBottom {
+            margin-top: 90px;
+            height: 7rem;
+            background-image: linear-gradient(180deg, transparent, rgba(26, 25, 25, 0.65), #111);
+        }
+
+        .row_poster {
+            width: 100%;
+            object-fit: contain;
+            max-height: 100px;
+            margin-right: 10px;
+            transition: transform 450ms;
+        }
+
+        .row_poster:hover {
+            cursor: pointer;
+            transform: scale(1.08);
+        }
+
+        .row_posterLarge {
+            max-height: 250px;
+        }
+
+        .row_posterLarge:hover {
+            cursor: pointer;
+            transform: scale(1.09);
+        }
+
+        .row_inner {
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .row_posters {
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            /* Suaviza a rolagem */
+            display: flex;
+            overflow-y: hidden;
+            overflow-x: scroll;
+            padding: 30px;
+        }
+
+        .row_posters::-webkit-scrollbar {
+            height: 8px;
+            border-radius: 10px;
+        }
+
+        .row_posters::-webkit-scrollbar-track {
+            background: #272727;
+            border-radius: 40px;
+        }
+
+        .row_posters::-webkit-scrollbar-thumb {
+            background-color: #202020;
+            /* Cor da barra de rolagem */
+            border-radius: 10px;
+            /* Bordas arredondadas */
+            border: 2px solid transparent;
+            /* Espaço opcional entre a barra e a trilha */
+            background-clip: content-box;
+        }
+
+        .row_posters::-webkit-scrollbar-thumb:hover {
+            background-color: #333;
+            /* Cor da barra de rolagem ao passar o mouse */
+        }
+
+
+        .row {
+            color: white;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+        .scrollButton {
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.1);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 3px;
+            font-size: 30px;
+            transition: background-color 0.5s;
+        }
+
+        .scrollButton:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .left {
+            left: 0;
+        }
+
+        .right {
+            right: 0;
+        }
+
+
+
+        .titleRow {
+            margin-top: 20px;
+            font-weight: 800;
+        }
+
+        .row2 img {
+            width: 200px;
+            height: 50%;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <header class="banner">
+        <div class="banner_contents">
+            <h1 class="banner_title">La Casa de Papel</h1>
+            <!--ASSINANTES -->
+            {% if user.is_authenticated %}
+            <div class="banner_buttons">
+                <button class="banner_button"><i class="fa-solid fa-play"></i> Assistir</button>
+                <button class="banner_button"><i class="fa-solid fa-circle-info"></i> Mais Informações</button>
+            </div>
+            {% else %}
+            <!--VISITANTES -->
+            <div class="banner_buttons">
+                <a href="{% url 'cadastro' %}"><button class="banner_button">Assine agora !</button></a>
+            </div>
+            {% endif %}
+            <h1 class="banner_description">
+                Oito ladrões se trancam com reféns na Casa da Moeda da Espanha. Seu líder manipula
+                a polícia para realizar um plano que pode ser o maior roubo da história ou uma missão
+                em vão.
+            </h1>
+        </div>
+        <div class="banner_fadeBottom"></div>
+    </header>
+
+
+    <div class="row">
+        <h2 class="titleRow">NOVIDADES</h2>
+        <div class="row_inner">
+            <button class="scrollButton left" onclick="scrollHorizontally(-1)">&#10094;</button>
+            <div class="row_posters row1">
+
+                {% for filme in filmes_lancamento %}
+                <img class="row_poster row_posterLarge" src="{{ filme.imagem.url }}" alt="{{ filme.nome }}">
+                {% empty %}
+                <p>Nenhum filme encontrado.</p>
+                {% endfor %}
+
+            </div>
+            <button class="scrollButton right" onclick="scrollHorizontally(1)">&#10095;</button>
+        </div>
+
+    </div>
+
+
+
+    <div class="row">
+        <h2 class="titleRow">ORIGINAIS NETFLIX</h2>
+        <div class="row_inner">
+            <div class="row_posters row2">
+
+                {% for filme in filmes_original %}
+                <img class="row_poster row_posterLarge" src="{{ filme.imagem.url }}" alt="{{ filme.nome }}">
+                {% empty %}
+                <p>Nenhum filme encontrado.</p>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <!--BOTÕES "<", ">" NO ROW-->
+    <script>
+        function scrollHorizontally(direction) {
+            var container = document.querySelector('.row1');
+            var scrollAmount = 300; // Ajuste este valor conforme necessário
+
+            if (direction === 1) {
+                container.scrollLeft += scrollAmount;
+            } else {
+                container.scrollLeft -= scrollAmount;
+            }
+        }
+    </script>
+
+
+    <!--ROLAGEM COM RODA DO MOUSE NO ROW -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var scrollContainers = document.querySelectorAll('.row1');
+
+            scrollContainers.forEach(function (scrollContainer) {
+                scrollContainer.addEventListener('wheel', function (e) {
+                    // Prevent vertical scrolling
+                    e.preventDefault();
+
+                    // Cross-browser wheel delta
+                    var delta = e.deltaY || e.detail || e.wheelDelta;
+                    scrollContainer.scrollLeft += delta;
+                });
+            });
+        });
+    </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var scrollContainers = document.querySelectorAll('.row2');
+
+        scrollContainers.forEach(function (scrollContainer) {
+            scrollContainer.addEventListener('wheel', function (e) {
+                // Prevent vertical scrolling
+                e.preventDefault();
+
+                // Cross-browser wheel delta
+                var delta = e.deltaY || e.detail || e.wheelDelta;
+                scrollContainer.scrollLeft += delta;
+            });
+        });
+    });
+</script>
+
+
+
+
+</body>
+
+
+
+
+
+</html>
+
+{% endblock %}
